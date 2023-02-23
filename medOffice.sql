@@ -5,18 +5,18 @@ USE medOffice;
 
 CREATE TABLE physician (
     physicianId INT PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR(50) NOT NULL,
-    lastName VARCHAR(50) NOT NULL,
+    firstName VARCHAR(20) NOT NULL,
+    lastName VARCHAR(20) NOT NULL,
     phone VARCHAR(20),
-    email VARCHAR(50)
+    email VARCHAR(30)
 );
 
 CREATE TABLE user (
     userId INT PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR(50) NOT NULL,
-    lastName VARCHAR(50) NOT NULL,
+    firstName VARCHAR(20) NOT NULL,
+    lastName VARCHAR(20) NOT NULL,
     phone VARCHAR(20),
-    email VARCHAR(50),
+    email VARCHAR(30),
     notifications BOOLEAN
 );
 
