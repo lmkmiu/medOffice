@@ -1,24 +1,28 @@
-package src.main.java.com.example.demo.entities;
+package com.example.demo.entities;
 
+import jakarta.persistence.*;
+
+import java.util.Objects;
 // import javax.persistence.*;
 // import javax.validation.constraints.*;
 
-// @Entity
+@Entity
+@Table(name="note")
 public class Note {
-    // @GeneratedValue(strategy= GenerationType.IDENTITY)
-    // @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private int noteId;
 
-    // @Column(nullable = false)
+    @Column(nullable = false)
     private String note;
 
-    // @ManyToOne
-    // @JoinColumn(name = "physicianId", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "physician_id", nullable = false)
     private Physician physician;
 
-    // @ManyToOne
-    // @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "app_id", nullable = false)
+    private Appointment appointment;
 
     public int getNoteId() {
         return noteId;
@@ -44,53 +48,24 @@ public class Note {
         this.physician = physician;
     }
 
-    public User getUser() {
-        return user;
+    public Appointment getAppointment() {
+        return appointment;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Note)) return false;
+        Note note1 = (Note) o;
+        return noteId == note1.noteId && note.equals(note1.note) && physician.equals(note1.physician) && appointment.equals(note1.appointment);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + noteId;
-        result = prime * result + ((note == null) ? 0 : note.hashCode());
-        result = prime * result + ((physician == null) ? 0 : physician.hashCode());
-        result = prime * result + ((user == null) ? 0 : user.hashCode());
-        return result;
+        return Objects.hash(noteId, note, physician, appointment);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Note other = (Note) obj;
-        if (noteId != other.noteId)
-            return false;
-        if (note == null) {
-            if (other.note != null)
-                return false;
-        } else if (!note.equals(other.note))
-            return false;
-        if (physician == null) {
-            if (other.physician != null)
-                return false;
-        } else if (!physician.equals(other.physician))
-            return false;
-        if (user == null) {
-            if (other.user != null)
-                return false;
-        } else if (!user.equals(other.user))
-            return false;
-        return true;
-    }
-
-    
 }

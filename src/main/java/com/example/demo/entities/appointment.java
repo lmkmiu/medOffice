@@ -1,28 +1,29 @@
-package src.main.java.com.example.demo.entities;
+package com.example.demo.entities;
 
-import java.time.LocalDate;
-// import javax.persistence.*;
-// import javax.validation.constraints.*;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
-// @Entity
-public class appointment {
-    // @GeneratedValue(strategy= GenerationType.IDENTITY)
-    // @Id
+@Entity
+@Table(name="appointment")
+public class Appointment {
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Id
     private int appId;
 
-    // @ManyToOne
-    // @JoinColumn(name = "physicianId", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "physician_id", nullable = false)
     private Physician physician;
 
-    // @ManyToOne
-    // @JoinColumn(name = "userId", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // @Column(nullable = false)
-    private LocalDate startTime;
+    @Column(nullable = false)
+    private LocalDateTime startTime;
 
-    // @Column(nullable = false)
-    private LocalDate endTime;
+    @Column(nullable = false)
+    private LocalDateTime endTime;
 
     public int getAppId() {
         return appId;
@@ -48,67 +49,32 @@ public class appointment {
         this.user = user;
     }
 
-    public LocalDate getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDate startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDate getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDate endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + appId;
-        result = prime * result + ((physician == null) ? 0 : physician.hashCode());
-        result = prime * result + ((user == null) ? 0 : user.hashCode());
-        result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
-        result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Appointment)) return false;
+        Appointment that = (Appointment) o;
+        return appId == that.appId && physician.equals(that.physician) && user.equals(that.user) && startTime.equals(that.startTime) && endTime.equals(that.endTime);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        appointment other = (appointment) obj;
-        if (appId != other.appId)
-            return false;
-        if (physician == null) {
-            if (other.physician != null)
-                return false;
-        } else if (!physician.equals(other.physician))
-            return false;
-        if (user == null) {
-            if (other.user != null)
-                return false;
-        } else if (!user.equals(other.user))
-            return false;
-        if (startTime == null) {
-            if (other.startTime != null)
-                return false;
-        } else if (!startTime.equals(other.startTime))
-            return false;
-        if (endTime == null) {
-            if (other.endTime != null)
-                return false;
-        } else if (!endTime.equals(other.endTime))
-            return false;
-        return true;
+    public int hashCode() {
+        return Objects.hash(appId, physician, user, startTime, endTime);
     }
-
-    
 }

@@ -1,38 +1,44 @@
-package src.main.java.com.example.demo.entities;
+package com.example.demo.entities;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.Objects;
-// import javax.persistence.*;
-// import javax.validation.constraints.*;
 
-// @Entity
+ @Entity
+ @Table(name="user")
 public class User {
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Id
+     @Column(name="user_id")
     private int userId;
 
-    // @NotBlank(message = "Field may not be empty")
-    // @Column(nullable = false)
-    // @Size(max = 20, message = "First Name must be less than 20 characters.")
+     @NotBlank(message = "Field may not be empty")
+     @Column(nullable = false, name="first_name")
+     @Size(max = 20, message = "First Name must be less than 20 characters.")
     private String firstName;
 
-    // @NotBlank(message = "Field may not be empty")
-    // @Column(nullable = false)
-    // @Size(max = 20, message = "Last Name must be less than 20 characters.")
+     @NotBlank(message = "Field may not be empty")
+     @Column(nullable = false, name="last_name")
+     @Size(max = 20, message = "Last Name must be less than 20 characters.")
     private String lastName;
 
-    // @NotBlank(message = "Field may not be empty")
-    // @Column(nullable = false)
-    // @Size(max = 20, message = "Phone must be less than 20 digit.")
-    private int phone;
+     @Column
+     @Size(max = 20, message = "Phone must be less than 20 digit.")
+    private String phone;
 
-    // @NotBlank(message = "Field may not be empty")
-    // @Column(nullable = false)
-    // @Email
-    private int email;
+     @Column
+     @Email
+    private String email;
 
-    // @Column(name = "notifications", nullable = false)
-    private boolean  notification;
+     @NotBlank(message = "Field may not be empty")
+     @Column(nullable = false)
+     private String passwords;
+
+//     @Column(name = "notifications", nullable = false)
+//    private boolean  notification;
 
     public int getUserId() {
         return userId;
@@ -58,72 +64,48 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public int getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(int email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public boolean isNotification() {
-        return notification;
-    }
+//    public boolean isNotification(int i) {
+//        return notification;
+//    }
+//
+//    public void setNotification(boolean notification) {
+//        this.notification = notification;
+//    }
 
-    public void setNotification(boolean notification) {
-        this.notification = notification;
-    }
+     public String getPasswords() {
+         return passwords;
+     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + userId;
-        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-        result = prime * result + phone;
-        result = prime * result + email;
-        result = prime * result + (notification ? 1231 : 1237);
-        return result;
-    }
+     public void setPasswords(String passwords) {
+         this.passwords = passwords;
+     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        User other = (User) obj;
-        if (userId != other.userId)
-            return false;
-        if (firstName == null) {
-            if (other.firstName != null)
-                return false;
-        } else if (!firstName.equals(other.firstName))
-            return false;
-        if (lastName == null) {
-            if (other.lastName != null)
-                return false;
-        } else if (!lastName.equals(other.lastName))
-            return false;
-        if (phone != other.phone)
-            return false;
-        if (email != other.email)
-            return false;
-        if (notification != other.notification)
-            return false;
-        return true;
-    }
+     @Override
+     public boolean equals(Object o) {
+         if (this == o) return true;
+         if (!(o instanceof User)) return false;
+         User user = (User) o;
+         return userId == user.userId && firstName.equals(user.firstName) && lastName.equals(user.lastName) && phone.equals(user.phone) && email.equals(user.email) && passwords.equals(user.passwords);
+     }
 
-    
-}
+     @Override
+     public int hashCode() {
+         return Objects.hash(userId, firstName, lastName, phone, email, passwords);
+     }
+ }
