@@ -23,8 +23,8 @@ CREATE TABLE user (
 
 CREATE TABLE appointment (
     app_id INT PRIMARY KEY AUTO_INCREMENT,
-    start_time DATE NOT NULL,
-    end_time DATE NOT NULL,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME NOT NULL,
     physician_id INT,
     FOREIGN KEY (physician_id) REFERENCES physician(physician_id),
     user_id INT,
